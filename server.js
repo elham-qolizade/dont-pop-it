@@ -201,7 +201,8 @@ const server = http.createServer((req, res) => {
   }
 
   if (req.method === 'GET' && url.pathname === '/events') {
-    res.writeHead(200, { 'content-type': 'text/event-stream', 'cache-control': 'no-cache', connection: 'keep-alive' });
+    // x-accel-buffering: stops hosting proxies (Render, nginx) from holding events back.
+    res.writeHead(200, { 'content-type': 'text/event-stream', 'cache-control': 'no-cache', connection: 'keep-alive', 'x-accel-buffering': 'no' });
     const pl = { id: crypto.randomUUID(), city: cityFromRequest(req, url), res, lastPumpAt: 0, streak: 0, score: 0, lastPumpNo: 0, lastPumpBalloon: 0 };
     players.set(pl.id, pl);
     send(pl, 'hello', { id: pl.id, city: pl.city });

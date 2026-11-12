@@ -1,0 +1,11 @@
+# Render Blueprint: one always-on Node web service (free plan sleeps after 15 idle minutes).
+# Render sets PORT itself; server.js reads it.
+services:
+  - type: web
+    name: dont-pop-it
+    runtime: node
+    plan: free
+    buildCommand: echo "no build step, no dependencies"
+    startCommand: node server.js
+    healthCheckPath: /
+    autoDeploy: true

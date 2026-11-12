@@ -32,6 +32,12 @@ Try it busy:
 DEMO_BOTS=10 node server.js
 ```
 
+## Deploy
+
+`render.yaml` is a Render Blueprint: one Node web service on the free plan, started with `node server.js`. In Render, choose **New → Blueprint** and pick this repository. The free plan sleeps after 15 idle minutes, so the first visitor after that waits about 30 seconds.
+
+This game cannot run on serverless hosts such as Vercel as it is: it needs one long-running process that holds the shared balloon in memory and keeps live connections open.
+
 ## How it works
 
 - `server.js`: Node's `http` module. Server-Sent Events push state to browsers; `POST /pump` and `POST /bank` take actions. The server owns the balloon and its secret pop point, so browsers cannot peek or cheat. Each player can pump at most once every 300 ms.

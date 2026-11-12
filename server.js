@@ -20,7 +20,8 @@ const INDEX_PATH = path.join(__dirname, 'public', 'index.html');
 
 // Demo mode: DEMO_BOTS=10 adds simulated players from random cities so you can feel a busy game alone.
 // Never enable this in production: showing fake players as real ones would be lying to visitors.
-const DEMO_BOTS = Number(process.env.DEMO_BOTS) || 0;
+// TEMPORARY: demo players are on by default so the live site can be shown to a friend. Set back to 0 afterwards.
+const DEMO_BOTS = process.env.DEMO_BOTS != null ? Number(process.env.DEMO_BOTS) : 10;
 const DEMO_CITIES = [
   'Tokyo, Japan', 'São Paulo, Brazil', 'Lagos, Nigeria', 'Berlin, Germany', 'Toronto, Canada', 'Mumbai, India',
   'Istanbul, Türkiye', 'Mexico City, Mexico', 'Seoul, South Korea', 'Cairo, Egypt', 'Sydney, Australia', 'Paris, France',
@@ -63,6 +64,7 @@ function snapshot() {
     balloon: balloon && { id: balloon.id, pumps: balloon.pumps, last: balloon.last, people: balloon.people.size, ageMs: Date.now() - balloon.bornAt, danger: danger(balloon) },
     lastPop,
     online: players.size + DEMO_BOTS,
+    demo: DEMO_BOTS > 0,
     wall: [...wall.entries()].sort((a, b) => b[1] - a[1]).slice(0, 6).map(([city, n]) => ({ city, n })),
     records,
     totals,

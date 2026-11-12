@@ -48,6 +48,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .live { display: inline-flex; align-items: center; gap: 7px; font-variant-numeric: tabular-nums; }
 .live i { width: 6px; height: 6px; border-radius: 50%; background: #3aa35b; }
 .live.off i { background: var(--danger); }
+.demo-tag { font-size: 11px; border: 1px solid var(--muted); border-radius: 999px; padding: 1px 7px; color: var(--muted); }
 .link:hover { color: var(--fg); }
 
 .stage { display: grid; place-items: center; cursor: pointer; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
@@ -173,7 +174,7 @@ html[lang="fa"] .stamp { right: auto; left: 10px; transform: rotate(12deg); lett
 <header class="top">
   <span class="word" data-t="name">don't pop it</span>
   <div class="top-right">
-    <span class="live" id="live"><i></i><span id="online">connecting</span></span>
+    <span class="live" id="live"><i></i><span id="online">connecting</span><span class="demo-tag" id="demoTag" hidden></span></span>
     <button class="link lang" id="langBtn" type="button">فارسی</button>
     <button class="link" id="soundBtn" type="button" aria-pressed="true">sound on</button>
   </div>
@@ -421,6 +422,8 @@ html[lang="fa"] .stamp { right: auto; left: 10px; transform: rotate(12deg); lett
   function applyState(s) {
     snap = s;
     $('online').textContent = T().online(s.online);
+    $('demoTag').hidden = !s.demo;
+    $('demoTag').textContent = lang === 'fa' ? 'دمو' : 'demo';
     renderNews(s.news[0]);
     renderRecords();
     renderRecordLine();

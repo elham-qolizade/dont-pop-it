@@ -1,4 +1,4 @@
-# Don't Pop It · نترکونش
+# Don't Pop It ·
 
 One balloon, shared by everyone online. Every click pumps it. It pops at a secret size, and nobody knows when.
 

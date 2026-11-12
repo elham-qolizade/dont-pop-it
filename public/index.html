@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -241,8 +241,8 @@ html[lang="fa"] .stamp { right: auto; left: 10px; transform: rotate(12deg); lett
   let poppedView = null, lastPopEvent = null, lastNews = '', myStreak = 0, myScore = 0, curDanger = 0;
 
   // ---------- language: English and Persian ----------
-  let lang = 'en';
-  try { lang = localStorage.getItem('dpi.lang') || (/^fa\b/i.test(navigator.language) ? 'fa' : 'en'); } catch (e) {}
+  let lang = 'fa'; // Persian by default; a visitor's own choice is remembered
+  try { lang = localStorage.getItem('dpi.lang') || 'fa'; } catch (e) {}
   const N = (n) => Number(n).toLocaleString(lang === 'fa' ? 'fa-IR' : 'en-US');
   const B = (s) => `<bdi>${esc(s)}</bdi>`; // keeps Latin city names readable inside Persian sentences
   const L = {

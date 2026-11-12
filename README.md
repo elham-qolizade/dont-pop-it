@@ -2,7 +2,7 @@
 
 One balloon, shared by everyone online. Every click pumps it. It pops at a secret size, and nobody knows when.
 
-- Click for a puff, hold for a bigger breath (up to +20).
+- Click for a puff, hold for a bigger breath. Air goes in faster the longer you hold, up to +100 in one breath.
 - Every safe pump grows your streak. Bank it for points (streak²), or pop the balloon and lose it all.
 - When it pops, everyone gets an obituary: who did it, from which city, how long it lived, and how close you were. The one who popped it is stamped **GUILTY**.
 - Persian (فارسی, the default) and English, with a switch in the top bar. Persian uses a right-to-left layout.

@@ -102,7 +102,7 @@ function newBalloon() {
 }
 
 // `pl` is the human player, when there is one: each safe pump grows their streak, popping wipes it.
-const MAX_BREATH = 20;
+const MAX_BREATH = 100;
 
 function pump(id, city, pl, amount = 1) {
   const b = balloon;

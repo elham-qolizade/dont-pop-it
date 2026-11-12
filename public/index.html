@@ -493,9 +493,14 @@ html[lang="fa"] .stamp { right: auto; left: 10px; transform: rotate(12deg); lett
   }
 
   // ---------- pumping: a click is one puff, holding blows a bigger breath ----------
-  const MAX_BREATH = 20, BREATH_MS = 110;
+  // The longer you hold, the faster air goes in: about +20 at 2 s, +60 at 3 s, the +100 cap at about 3.8 s.
+  const MAX_BREATH = 100, BREATH_MS = 110, HISS_RAMP_S = 3.8;
   let holdStart = 0, holdTimer = null;
-  function breath() { return holdStart ? Math.min(MAX_BREATH, 1 + Math.floor((performance.now() - holdStart) / BREATH_MS)) : 0; }
+  function breath() {
+    if (!holdStart) return 0;
+    const t = performance.now() - holdStart;
+    return Math.min(MAX_BREATH, Math.floor(1 + t / BREATH_MS + 4 * (t / 1000) ** 2));
+  }
   function startHold() {
     if (holdStart || !me || !snap?.balloon || poppedView) return;
     if (performance.now() - lastPumpAt < COOLDOWN) return;
@@ -751,7 +756,7 @@ html[lang="fa"] .stamp { right: auto; left: 10px; transform: rotate(12deg); lett
       if (on && audio.on) {
         const n = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
         n.buffer = audio.noise(3); n.loop = true; f.type = 'bandpass'; f.Q.value = 1.1;
-        f.frequency.setValueAtTime(700, c.currentTime); f.frequency.linearRampToValueAtTime(2600, c.currentTime + MAX_BREATH * BREATH_MS / 1000);
+        f.frequency.setValueAtTime(700, c.currentTime); f.frequency.linearRampToValueAtTime(3200, c.currentTime + HISS_RAMP_S);
         g.gain.setValueAtTime(.0001, c.currentTime); g.gain.exponentialRampToValueAtTime(.16, c.currentTime + .08);
         n.connect(f).connect(g).connect(c.destination); n.start();
         this._hiss = { n, g };

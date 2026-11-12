@@ -743,6 +743,8 @@ html[lang="fa"] .stamp { right: auto; left: 10px; transform: rotate(12deg); lett
     let ctx = null, on = true;
     function unlock() {
       if (ctx) { ctx.resume(); return; }
+      // iPhone: without this, the ring/silent switch mutes all Web Audio (Safari 16.4+).
+      try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
       try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {}
     }
     function noise(sec) {
@@ -774,11 +776,11 @@ html[lang="fa"] .stamp { right: auto; left: 10px; transform: rotate(12deg); lett
       const t = c.currentTime;
       const n = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
       n.buffer = audio.noise(.14); f.type = 'bandpass'; f.frequency.value = 1400; f.Q.value = .8;
-      g.gain.setValueAtTime(.12 * vol, t); g.gain.exponentialRampToValueAtTime(.001, t + .13);
+      g.gain.setValueAtTime(.35 * vol, t); g.gain.exponentialRampToValueAtTime(.001, t + .13);
       n.connect(f).connect(g).connect(c.destination); n.start(t); n.stop(t + .14);
       const o = c.createOscillator(), og = c.createGain(), base = Math.min(1500, 320 + pumps * 3);
       o.type = 'sine'; o.frequency.setValueAtTime(base, t); o.frequency.exponentialRampToValueAtTime(base * 1.25, t + .09);
-      og.gain.setValueAtTime(.05 * vol, t); og.gain.exponentialRampToValueAtTime(.001, t + .1);
+      og.gain.setValueAtTime(.2 * vol, t); og.gain.exponentialRampToValueAtTime(.001, t + .1);
       o.connect(og).connect(c.destination); o.start(t); o.stop(t + .12);
     },
     // Heartbeat: louder and (via the caller's timing) faster as the balloon nears its limit.

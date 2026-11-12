@@ -1,0 +1,11 @@
+{
+  "name": "dont-pop-it",
+  "private": true,
+  "description": "One balloon, pumped by everyone online. Nobody knows when it pops.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
